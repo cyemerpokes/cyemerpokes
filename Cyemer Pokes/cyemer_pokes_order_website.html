@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyemer Pokes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #08162f, #142850);
+      color: #ffffff;
+    }
+    header {
+      background: #0b1d3a;
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    }
+    header img {
+      height: 48px;
+    }
+    header h1 {
+      font-size: 22px;
+      margin: 0;
+      color: #4da3ff;
+    }
+    nav {
+      margin-left: auto;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 16px;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+    nav button:hover {
+      color: #4da3ff;
+    }
+    .page {
+      display: none;
+      max-width: 800px;
+      margin: 40px auto;
+      background: #0f254f;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .page.active {
+      display: block;
+    }
+    h2 {
+      color: #77b8ff;
+      margin-top: 0;
+    }
+    p {
+      line-height: 1.6;
+    }
+    .cta {
+      margin-top: 25px;
+      padding: 14px;
+      width: 100%;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4da3ff, #77b8ff);
+      color: #00142e;
+    }
+    .cta:hover {
+      opacity: 0.9;
+    }
+    label {
+      display: block;
+      margin-top: 16px;
+      font-weight: 600;
+    }
+    input {
+      width: 100%;
+      padding: 11px;
+      margin-top: 6px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+    }
+    .notice {
+      background: #1b3b73;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
+    .warning {
+      background: #7a1f1f;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 14px;
+      display: none;
+    }
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #cfdfff;
+      margin: 30px 0;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="Cyemer Pokes Logo" />
+  <h1>CYEMER POKES</h1>
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('order')">Order</button>
+    <button onclick="showPage('rules')">Rules</button>
+  </nav>
+</header>
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+  <h2>Welcome to Cyemer Pokes</h2>
+  <p>
+    Cyemer Pokes is a student-run Pokémon card resale group serving students of
+    <strong>Amjad School – Lebanon</strong>. We sell real Pokémon cards, bundles,
+    and accept fair trades.
+  </p>
+  <p>
+    All orders are placed online and confirmed through WhatsApp to keep things
+    simple and safe.
+  </p>
+  <button class="cta" onclick="showPage('order')">Place an Order</button>
+</div>
+
+<!-- ORDER PAGE -->
+<div id="order" class="page">
+  <h2>Place an Order</h2>
+
+  <div class="notice">
+    • Orders are only for <strong>Amjad School students</strong>.<br>
+    • WhatsApp is required to complete the order.<br>
+    • PC users are supported — WhatsApp Web will open automatically.
+  </div>
+
+  <label>Your Full Name</label>
+  <input type="text" id="name" placeholder="Example: Ali Ahmad" />
+
+  <label>Your Age</label>
+  <input type="number" id="age" placeholder="Example: 12" />
+
+  <label>Your Class</label>
+  <input type="text" id="class" placeholder="Example: Grade 6A" />
+
+  <label>What do you want to order?</label>
+  <input type="text" id="orderItem" placeholder="Example: $5 bundle, Pikachu card" />
+
+  <label>Preferred Meetup Time</label>
+  <input type="text" id="time" placeholder="Example: Recess / After school" />
+
+  <button class="cta" onclick="sendOrder()">Send Order via WhatsApp</button>
+
+  <div class="warning" id="waWarning">
+    WhatsApp could not be opened. Please make sure WhatsApp or WhatsApp Web is available on your device.
+  </div>
+</div>
+
+<!-- RULES PAGE -->
+<div id="rules" class="page">
+  <h2>Rules & Info</h2>
+  <p>
+    • Only real Pokémon cards are sold.<br>
+    • No fake cards.<br>
+    • Trades must be fair for both sides.<br>
+    • Meetups happen only at school, at agreed times.<br>
+    • Respect school rules at all times.
+  </p>
+  <p>
+    Founded by <strong>Kareem Zeeini</strong>, <strong>Youssef Hariri</strong>, and
+    <strong>Mohammad Delbani</strong>.
+  </p>
+</div>
+
+<footer>
+  Cyemer Pokes • Independent student-run Pokémon resale group
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function sendOrder() {
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const userClass = document.getElementById('class').value;
+    const order = document.getElementById('orderItem').value;
+    const time = document.getElementById('time').value;
+    const warning = document.getElementById('waWarning');
+
+    if (!name || !age || !userClass || !order || !time) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    const phoneNumber = '9613918212';
+
+    const message = `CYEMER POKES ORDER%0A%0A` +
+      `Name: ${name}%0A` +
+      `Age: ${age}%0A` +
+      `Class: ${userClass}%0A` +
+      `School: Amjad School%0A` +
+      `Order: ${order}%0A` +
+      `Meetup Time: ${time}`;
+
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const url = isMobile
+      ? `https://wa.me/${phoneNumber}?text=${message}`
+      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${message}`;
+
+    try {
+      window.open(url, '_blank');
+    } catch (e) {
+      warning.style.display = 'block';
+    }
+  }
+</script>
+
+</body>
+</html>
